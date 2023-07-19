@@ -1,4 +1,3 @@
-merge 테스트 - master 브랜치 수정 사항
 # Git Workflow 정리
 
 ## 목차
@@ -147,15 +146,100 @@ merge 테스트 - master 브랜치 수정 사항
 * merge
   * 다른 브랜치의 수정 사항을 병합하는 키워드
   * 병합할 브랜치로 checkout 한 후 병합 대상 브랜치로 merge 명령어 수행
-    * git merge main master (main 브랜치로 master 의 수정 사항이 병합)
-    * 
+    * git merge master (main 브랜치로 master 의 수정 사항이 병합)
+    * 예시
+      * master 수정
+      ```
+      SeonilKimui-MacBook-Pro-2:git_workflow seonil$ git log
+      commit 1b77e35fd8a7713a97119854f8675818a9269558 (HEAD -> master, origin/master)
+      Author: 김선일 <si.kim@piolink.com>
+      Date:   Wed Jul 19 22:42:37 2023 +0900
+
+      merge 테스트 커밋
+
+      commit by si.kim
+      ```
+      * main 브랜치 확인
+      ```
+      SeonilKimui-MacBook-Pro-2:git_workflow seonil$ git log
+      commit 5c32ea36efc3720339b37e038474884223497141 (HEAD -> main, origin/main, origin/HEAD)
+      Author: Seonil9036 <seonil9036@gmail.com>
+      Date:   Wed Jul 19 22:09:33 2023 +0900
+
+      Update git_workflow.md
+      ```
+      * merge
+      ```
+      SeonilKimui-MacBook-Pro-2:git_workflow seonil$ git merge origin master
+      Auto-merging git_workflow.md
+      Merge made by the 'recursive' strategy.
+      git_workflow.md | 1 +
+      1 file changed, 1 insertion(+)
+      SeonilKimui-MacBook-Pro-2:git_workflow seonil$ git log
+      commit ceb35e2f3d90f50acf12d2575ecacdca745dbcaa (HEAD -> main)
+      Merge: 5c32ea3 1b77e35
+      Author: 김선일 <si.kim@piolink.com>
+      Date:   Wed Jul 19 22:45:51 2023 +0900
+
+      Merge branch 'master' into main
+
+      commit 1b77e35fd8a7713a97119854f8675818a9269558 (origin/master, master)
+      Author: 김선일 <si.kim@piolink.com>
+      Date:   Wed Jul 19 22:42:37 2023 +0900
+
+      merge 테스트 커밋
+
+      commit by si.kim
+      ```
 * fetch
-  
+  * 원격 브랜치의 수정 사항을 가져오는 키워드
+  * 가져온 수정 사항은 로컬에 반영되지 않고 임시파일에 저장되며, git diff << 로컬 브랜치 >> << 원격 브랜치 >> 를 통해 반영전 수정 사항을 확인할 수 있다.
+  * 수정 사항 확인 후 git merge 를 통해 리모트 브랜치 수정사항을 반영하면 git pull (git fetch + merge) 과 같은 동작을 수행한다.
+  * 예시
+    ```
+    SeonilKimui-MacBook-Pro-2:git_workflow seonil$ git fetch
+    remote: Enumerating objects: 5, done.
+    remote: Counting objects: 100% (5/5), done.
+    remote: Compressing objects: 100% (3/3), done.
+    remote: Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+    Unpacking objects: 100% (3/3), done.
+    From https://github.com/Seonil9036/git_workflow
+    f249a24..5c32ea3  main       -> origin/main
+
+    SeonilKimui-MacBook-Pro-2:git_workflow seonil$ git diff main origin/main (git log --decorate --all 로도 어떠한 커밋이 추가되었는지 확인가능)
+    diff --git a/git_workflow.md b/git_workflow.md
+    index 4dc308c..50ccfa6 100644
+    --- a/git_workflow.md
+    +++ b/git_workflow.md
+    @@ -24,19 +24,137 @@
+    * hotfix
+     * master 브랜치로 배포 후 버그가 발생하였을 떄 긴급하게 수정을 진행하는 브랜치
+
+    -<img src="git_flow.png" width="450px" height="300px"></img><br/>
+    +<img src="git_flow.png" width="1000px" height="1000px"></img><br/
+
+    SeonilKimui-MacBook-Pro-2:git_workflow seonil$ git merge origin/main
+    Updating d39725c..5c32ea3
+    Fast-forward
+    git_workflow.md | 126 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++----
+    1 file changed, 122 insertions(+), 4 deletions(-)
+    
+    SeonilKimui-MacBook-Pro-2:git_workflow seonil$ git log
+    commit 5c32ea36efc3720339b37e038474884223497141 (HEAD -> main, origin/main, origin/HEAD)
+    Author: Seonil9036 <seonil9036@gmail.com>
+    Date:   Wed Jul 19 22:09:33 2023 +0900
+
+    Update git_workflow.md
+
+    키워드 정리
+    ```
 * rebase
-  
+  * merge 와 유사한 개념으로 다른 브랜치의 수정사항을 병합 할 브랜치에 최신 시점 이후로 재배치 하는 명령어
+  * 커밋 로그가 하나의 흐름으로 변경되기 때문에 
 * revert
   * 반영된 코드를 이전으로 원복 시키는 키워드
   * 
 
 레퍼런스 
  * https://gmlwjd9405.github.io/2018/05/11/types-of-git-branch.html
+ * https://ansohxxn.github.io/git/merge/
