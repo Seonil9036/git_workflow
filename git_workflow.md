@@ -24,12 +24,52 @@
   * hotfix
     * master 브랜치로 배포 후 버그가 발생하였을 떄 긴급하게 수정을 진행하는 브랜치
       
-<img src="git_flow.png" width="450px" height="300px"></img><br/>
+<img src="git_flow.png" width="1000px" height="1000px"></img><br/>
 
 ## 2. [Workflow 관련 Git 명령어 소개]
 
 * git 에서 형상 관리를 진행함에 있어 유용한 키워드들을 정리하였다.
+* branch
+  * 브랜치를 생성하는 명령어
+  * git branch <<브랜치 명>>
+  * 예시
+```
+    SeonilKimui-MacBook-Pro-2:git_workflow seonil$ git branch master
+    SeonilKimui-MacBook-Pro-2:git_workflow seonil$ git branch
+    * main
+      master
+```
+  * 리모트 반영 시 git push origin <<브랜치명>> 을 통해 반영
 * checkout
+  * 브랜치를 전환하거나, 파일의 수정 사항을 복구할 때 사용하는 명령어
+  * git checkout <<브랜치 명>> or git checkout <<파일명>>
+  * 예시
+```
+    SeonilKimui-MacBook-Pro-2:git_workflow seonil$ git branch
+    * main
+      master
+    SeonilKimui-MacBook-Pro-2:git_workflow seonil$ git checkout master
+    Switched to branch 'master'
+    SeonilKimui-MacBook-Pro-2:git_workflow seonil$ git branch
+      main
+    * master
+```
+```
+    SeonilKimui-MacBook-Pro-2:git_workflow seonil$ git diff --color
+    diff --git a/git_workflow.md b/git_workflow.md
+    index 4dc308c..fcdb166 100644
+    --- a/git_workflow.md
+    +++ b/git_workflow.md
+    @@ -1,3 +1,5 @@
+    +checkout 테스트
+    +
+     # Git Workflow 정리
+
+     ## 목차
+    SeonilKimui-MacBook-Pro-2:git_workflow seonil$ git checkout git_workflow.md
+    SeonilKimui-MacBook-Pro-2:git_workflow seonil$ git diff --color
+    SeonilKimui-MacBook-Pro-2:git_workflow seonil$
+```
 * tag
 * merge
 * stash
