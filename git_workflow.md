@@ -1,3 +1,5 @@
+rebase 테스트 - master 브랜치 수정
+merge 테스트 - master 브랜치 수정 사항
 # Git Workflow 정리
 
 ## 목차
